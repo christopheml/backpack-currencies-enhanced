@@ -1,0 +1,7 @@
+﻿## Interface: 90001
+## Title: Backpack Currencies Enhanced
+## Version: 1.2
+## Notes: Improves the display of currencies under the backpack
+## Author: Malcorne (EU-Hyjal)
+
+BackpackCurrenciesEnhanced.lua
