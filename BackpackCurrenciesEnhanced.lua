@@ -3,16 +3,18 @@ local selectedCurrencyID = nil;
 
 local function RemoveEntry(dropdown)
 	if selectedCurrencyID then
-		local name = GetCurrencyInfo(selectedCurrencyID);
-
-		for i=0, GetCurrencyListSize() do
-			local otherName, _, _, _, isWatched = GetCurrencyListInfo(i);
-			if name == otherName and isWatched then
-				SetCurrencyBackpack(i, 0);
-				selectedCurrencyID = nil;
-				BackpackTokenFrame_Update();
-				TokenFrame_Update();
-				return;
+		for i=1, C_CurrencyInfo.GetCurrencyListSize() do
+			local info = C_CurrencyInfo.GetCurrencyListInfo(i)
+			if not info.isHeader then
+				local link = C_CurrencyInfo.GetCurrencyListLink(i)
+				local id = tonumber(strmatch(link, "currency:(%d+)"))
+				if id == selectedCurrencyID then
+					C_CurrencyInfo.SetCurrencyBackpack(i, false);
+					selectedCurrencyID = nil;
+					BackpackTokenFrame_Update();
+					TokenFrame_Update();
+					return;
+				end
 			end
 		end
 	end
@@ -91,7 +93,7 @@ local function BackpackTokenFrame_UpdateHook()
 		
 		if count then
 			-- Custom coloring for cap
-			local maximum = select(6, GetCurrencyInfo(currencyID));
+			local maximum = select(6, C_CurrencyInfo.GetCurrencyInfo(currencyID));
 			watchButton.count:SetTextColor(ColorCount(count, maximum));
 
 			-- Enhanced formatting
