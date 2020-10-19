@@ -73,31 +73,38 @@ local function FormatCount(count)
 end
 
 local function ColorCount(count, maximum)
+
+	local function ExplodeToRGB(color)
+		return color.r, color.g, color.b
+	end
+
 	if maximum and maximum > 0 then
 		local ratio = count / maximum;
 	
 		if ratio == 1 then
-			return 1, 0, 0, 1;
+			return ExplodeToRGB(RED_FONT_COLOR);
 		elseif ratio > 0.8 then
-			return 1, 0.63, 0.17, 1;
+			return ExplodeToRGB(ORANGE_FONT_COLOR);
 		end
 	end
 
-	return 1, 1, 1, 1;
+	return ExplodeToRGB(WHITE_FONT_COLOR);
 end
 
 local function BackpackTokenFrame_UpdateHook()
 	for i=1, MAX_WATCHED_TOKENS do
 		local watchButton = _G["BackpackTokenFrameToken"..i];
-		local _, count, _, currencyID = C_CurrencyInfo.GetBackpackCurrencyInfo(i);
-		
-		if count then
-			-- Custom coloring for cap
-			local maximum = select(6, C_CurrencyInfo.GetCurrencyInfo(currencyID));
-			watchButton.count:SetTextColor(ColorCount(count, maximum));
+
+		local currencyInfo = C_CurrencyInfo.GetBackpackCurrencyInfo(i);
+		if currencyInfo then
+			local quantity, currencyID = currencyInfo["quantity"], currencyInfo["currencyTypesID"]
+			local maximum = C_CurrencyInfo.GetCurrencyInfo(currencyID)["maxQuantity"];
+
+			-- Custom coloring for capped currencies
+			watchButton.count:SetTextColor(ColorCount(quantity, maximum));
 
 			-- Enhanced formatting
-			watchButton.count:SetText(FormatCount(count));
+			watchButton.count:SetText(FormatCount(quantity));
 		end
 	end
 end
