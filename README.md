@@ -12,6 +12,14 @@ The addon is packaged into a zip file through the `build.sh` script. Make sure y
 
 ## Changes 
 
+### 1.3
+
+- Fixed multiple bugs relative to the 9.0.1 API changes.
+
+- Used the Blizzard API colors for the currency amounts.
+
+- Used the Blizzard API formatting logic for the currency amounts now that it supports huge numbers.
+
 ### 1.2
 
 - Fixed a bug from a call to a function that was moved to another namespace.
