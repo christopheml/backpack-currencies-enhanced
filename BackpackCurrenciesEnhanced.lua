@@ -63,13 +63,13 @@ local function CurrencyClickHook(self, button)
 	end;
 end
 
--- Formats huge numbers in thousands to allow number the default interface would render as "*"
 local function FormatCount(count)
-	if count <= 99999 then
-		return count;
-	else
-		return string.format("%dk", count / 1000);
+	-- Borrowed from Blizzard API now they got the formatting right :-)
+	local currencyText = BreakUpLargeNumbers(count);
+	if strlenutf8(currencyText) > 5 then
+		currencyText = AbbreviateNumbers(count);
 	end
+	return currencyText
 end
 
 local function ColorCount(count, maximum)
