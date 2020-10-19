@@ -92,6 +92,7 @@ local function ColorCount(count, maximum)
 end
 
 local function BackpackTokenFrame_UpdateHook()
+	local noCurrencyShown = true;
 	for i=1, MAX_WATCHED_TOKENS do
 		local watchButton = _G["BackpackTokenFrameToken"..i];
 
@@ -105,7 +106,12 @@ local function BackpackTokenFrame_UpdateHook()
 
 			-- Enhanced formatting
 			watchButton.count:SetText(FormatCount(quantity));
+
+			noCurrencyShown = false
 		end
+	end
+	if noCurrencyShown then
+		BackpackTokenFrame:Hide();
 	end
 end
 
