@@ -136,7 +136,7 @@ local function Init(...)
 			watchButton:HookScript("OnClick", CurrencyClickHook);
 		end
 		
-		-- Hook the rendering of the currency buttons to fix the count if > 99999
+		-- Hook the rendering of the currency buttons to enable custom rendering of currency amount
 		hooksecurefunc("BackpackTokenFrame_Update", BackpackTokenFrame_UpdateHook);
 	end
 end		
